@@ -67,7 +67,18 @@ Example vins for testing / implementation:
 ruby vin_check.rb <VIN>
 ```
 
-## Additional Resources
+## Bonus Activity
+```
+Are you able to provide any suggested attributes based upon the decoding of the VIN given your newfound knowledge of this identifier?
+* All attributes related to the safty such as 
+- "AirBagLocFront": "1st Row (Driver and Passenger)"
+- "AirBagLocSide": "1st Row (Driver and Passenger)"
+- "SeatBeltsAll": "Manual"
+- "EngineHP": "300"
+
+
+If we wanted to replicate or enhance behavior in our GET /vins/:vin endpoint in Global Assets how might this script help us? Do you see any opportunities in the API contract to allow this when a consumer receives an HTTP 400 - Bad Request response.
+```
 
 ### NHTSA Vin Decoder
 
