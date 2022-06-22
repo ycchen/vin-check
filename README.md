@@ -67,7 +67,7 @@ Example vins for testing / implementation:
 ruby vin_check.rb <VIN>
 ```
 
-#### How to run the script version 2
+#### How to run the script version 2 with spec
 ```
 ruby vin.rb <VIN>
 ```
