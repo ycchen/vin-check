@@ -62,9 +62,14 @@ Example vins for testing / implementation:
 * 3HSDJAPRSFN657165
 * JBDCUB16657005393
 
-#### How to run the script
+#### How to run the script version 1
 ```
 ruby vin_check.rb <VIN>
+```
+
+#### How to run the script version 2
+```
+ruby vin.rb <VIN>
 ```
 
 ## Bonus Activity
