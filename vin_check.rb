@@ -1,8 +1,7 @@
-require 'pry'
 require 'net/http'
 require 'json'
 
-# VIN examples
+#VIN examples
 # INKDLUOX33R385016
 # 2NKWL00X16M149834
 # INKDLUOX33R385016
@@ -33,14 +32,13 @@ def check_invalid_charaters?(vin)
   (/^[^IOQ]+$/ =~ vin).nil?
 end
 
-def valid?(vin)
+def is_check_digit_valid?(vin)
   calculate_check_digit(vin) == vin[8].to_i
 end
 
-def suggest_vin(vin, chk_digit)
-  new_vin = vin.dup
-  new_vin[8] = chk_digit.to_s
-  new_vin
+def replace_chk_digit(vin, chk_digit)
+  vin[8] = chk_digit.to_s
+  vin
 end
 
 def replace_invalid_char(vin)
@@ -65,30 +63,31 @@ end
 return unless vin.instance_of?(String)
 return if vin.length != 17
 
-chk_digit = calculate_check_digit(vin)
-is_valid = valid?(vin)
+
+check_digit_valid = is_check_digit_valid?(vin)
+
+suggested_vin = if check_invalid_charaters?(vin)
+    replace_invalid_char(vin)
+  else
+    vin
+  end
+
 
 puts "-"*70
 puts "Provided  VIN: #{vin}"
-puts "Check Digit: #{is_valid ? 'VALID' : 'INVALID'}" 
+puts "Check Digit: #{check_digit_valid ? 'VALID' : 'INVALID'}" 
 
-suggest_vin = if check_invalid_charaters?(vin)
-                replace_invalid_char(vin)
-              else
-                vin
-              end
-
-unless is_valid
-  rechk_digit = calculate_check_digit(suggest_vin)
-  suggest_vin = suggest_vin(suggest_vin, rechk_digit)
+if !check_digit_valid
+  rechk_digit = calculate_check_digit(suggested_vin)
+  suggested_vin = replace_chk_digit(suggested_vin, rechk_digit)
 end
 
-if is_valid
+if check_digit_valid
   puts 'This looks like a VALID VIN!'
-  nhtsa_api(suggest_vin)
+  nhtsa_api(suggested_vin)
 else
-  puts "Suggested VIN: #{suggest_vin}"
-  nhtsa_api(suggest_vin)
+  puts "Suggested VIN: #{suggested_vin}"
+  nhtsa_api(suggested_vin)
 end
 
 puts "-"*70
